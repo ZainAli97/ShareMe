@@ -1,9 +1,14 @@
 import React from 'react';
-
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { Login } from "./components";
+import { Home } from "./container/Home";
 const App = () => {
     return (
         <>
-            <h1 className='pt-4 bg-slate-600'>app</h1>
+            <Routes>
+                <Route path='login' element={<Login />} />
+                <Route path='/*' element={<Home />} />
+            </Routes>
         </>
     );
 };
