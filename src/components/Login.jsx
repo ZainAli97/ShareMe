@@ -5,8 +5,10 @@ import { FcGoogle } from "react-icons/fc";
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
 import { gapi } from "gapi-script";
+import { client } from "../client";
 
 const Login = () => {
+    const navigate = useNavigate();
     const clientId = "938033002845-9g543te636hbnnsut2bgt73ag35la8d8.apps.googleusercontent.com";
     useEffect(() => {
         gapi.load("client:auth2", () => {
@@ -16,7 +18,16 @@ const Login = () => {
     const responseGoogle = (response) => {
         localStorage.setItem("user", JSON.stringify(response.profileObj));
         const { name, googleId, imageUrl } = response.profileObj;
-        console.log(response);
+        const doc = {
+            _id: googleId,
+            _type: "user",
+            userName: name,
+            image: imageUrl
+        };
+        client.createIfNotExists(doc)
+            .then(() => {
+                navigate("/", { replace: true });
+            });
     };
     return (
         <>
