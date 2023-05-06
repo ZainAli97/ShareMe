@@ -27,7 +27,9 @@ export default {
       name: 'image',
       title: 'Image',
       type: 'image',
-      hotspot: true,
+      options: {
+        hotspot: true,
+      }
     },
     {
       name: 'userId',
@@ -43,13 +45,13 @@ export default {
       name: 'save',
       title: 'Save',
       type: 'string',
-      to: [{type: 'save'}],
+      to: [{ type: 'save' }],
     },
     {
       name: 'comment',
       title: 'Comment',
       type: 'string',
-      to: [{type: 'comment'}],
+      to: [{ type: 'comment' }],
     },
   ],
-}
+};
