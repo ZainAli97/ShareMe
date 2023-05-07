@@ -29,7 +29,7 @@ export default {
       type: 'image',
       options: {
         hotspot: true,
-      }
+      },
     },
     {
       name: 'userId',
@@ -38,20 +38,20 @@ export default {
     },
     {
       name: 'postedBy',
-      title: 'postedBy',
+      title: 'PostedBy',
       type: 'postedBy',
     },
     {
       name: 'save',
       title: 'Save',
-      type: 'string',
-      to: [{ type: 'save' }],
+      type: 'array',
+      of: [{ type: 'save' }],
     },
     {
-      name: 'comment',
-      title: 'Comment',
-      type: 'string',
-      to: [{ type: 'comment' }],
+      name: 'comments',
+      title: 'Comments',
+      type: 'array',
+      of: [{ type: 'comment' }],
     },
   ],
 };
