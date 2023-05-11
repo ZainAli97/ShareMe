@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { MdDownloadForOffline } from 'react-icons/md';
 import { AiTwotoneDelete } from 'react-icons/ai';
 import { BsFillArrowUpRightCircleFill } from 'react-icons/bs';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { client, urlFor } from '../client';
 import { fetchUser } from '../utils/fetchUser';
 
@@ -32,6 +32,13 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     window.location.reload();
                 });
         }
+    };
+    const deletePin = (id) => {
+        client
+            .delete(id)
+            .then(() => {
+                window.location.reload();
+            });
     };
     return (
         <div className='m-2'>
@@ -72,11 +79,43 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                                         }} >Save</button>
                                 )}
                         </div>
+                        <div className="flex justify-between items-center gap-2 w-full">
+                            {destination && (
+                                <a href={destination}
+                                    target='_blank '
+                                    rel='noreferrer'
+                                    className='bg-white flex items-center gap-2 text-black font-bold p-2 pl-4 pr-4 rounded-full opacity-70 hover:opacity-10 hover:shadow-md'>
+                                    <BsFillArrowUpRightCircleFill />
+                                    {destination.length > 20 ? destination.slice(8, 20) : destination.slice(8)}
+                                </a>
+                            )}
+                            {postedBy?._id === user.googleId && (
+                                <button
+                                    type='button'
+                                    className='bg-white opacity-75 hover:opacity-100 text-dark font-bold  text-base rounded-3xl hover:shadow-md outline-none p-2'
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        deletePin();
+                                    }}>
+                                    <AiTwotoneDelete />
+                                </button>
+                            )}
+                        </div>
                     </div>
                 )}
             </div>
+            <Link
+                to={`user-profile/${postedBy?._id}`}
+                className='flex gap-2 m-2 items-center'>
+                <img
+                    src={postedBy?.image}
+                    alt="user-profile"
+                    className='w-8 h-8 rounded-full object-cover'
+                />
+                <p className="font-semibold capitalize">{postedBy?.userName}</p>
+            </Link>
         </div>
     );
 };
 
-export default Pin;
+export default Pin; 
